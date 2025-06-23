@@ -1,12 +1,19 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useTodoStore } from '@/store';
+import Loader from '@/components/Loader.vue';
+import TaskForm from '@/components/TaskForm.vue';
+import TodoList from '@/components/TodoList.vue';
+
+const store = useTodoStore();
+</script>
 
 <template>
     <main id="main" class="main">
         <div class="container">
             <div class="main__content">
-                <h4 class="main__content-title">
-                    Manager Task
-                </h4>
+                <Loader v-if="store.isLoading" />
+                <TaskForm />
+                <TodoList />
             </div>
         </div>
     </main>
@@ -18,7 +25,7 @@
 .main {
     position: relative;
     width: 100%;
-    background: $white;
+    background: $light;
     padding: 58px 0 0 0;
 
     &__content {
@@ -27,6 +34,7 @@
     }
 
     &__content-title {
+        margin: 0 0 24px 0;
         font-family: $roboto;
         font-size: 24px;
         font-weight: 700;
