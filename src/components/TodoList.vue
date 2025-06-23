@@ -2,6 +2,7 @@
 import { computed, onMounted } from 'vue';
 import { useFetcher } from '@/сomposables/useFetcher';
 import { useTodoStore } from '@/store';
+import Skeleton from '@/components/Skeleton.vue';
 
 const store = useTodoStore();
 
@@ -11,7 +12,7 @@ const taskList = computed(() => store.todoList);
 
 onMounted(async () => {
     try {
-        store.setIsLoading(true)
+        // store.setIsLoading(true)
         const tasks = await useFetcher.get('/todos');
         store.setTodoTask(tasks.data);
 
@@ -83,6 +84,12 @@ const deleteTask = async (id: number) => {
                 </div>
             </li>
         </ul>
+        <div v-if="store.isLoading" class="todo-list__empty">
+            <Skeleton 
+                v-for="item in 9" 
+                :key="item"
+            ></Skeleton>
+        </div>
     </div>
 </template>
 
@@ -102,10 +109,34 @@ const deleteTask = async (id: number) => {
 
     &__array {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-auto-rows: 1fr;
         gap: 30px 20px;
         margin: 40px 0 0 0;
+
+        @media screen and (max-width: 992px) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media screen and (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__empty {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-auto-rows: 1fr;
+        gap: 30px 20px;
+        margin: 40px 0 0 0;
+
+        @media screen and (max-width: 992px) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media screen and (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
     }
 
     &__item {
