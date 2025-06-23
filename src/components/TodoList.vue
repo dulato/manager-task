@@ -12,15 +12,15 @@ const taskList = computed(() => store.todoList);
 
 onMounted(async () => {
     try {
-        // store.setIsLoading(true)
+        store.setIsFetching(true)
         const tasks = await useFetcher.get('/todos');
         store.setTodoTask(tasks.data);
 
     } catch (error) {
         console.error('Failed to delete task:', error);
-        store.setIsLoading(false)
+        store.setIsFetching(false)
     } finally {
-        store.setIsLoading(false)
+        store.setIsFetching(false)
     }
 });
 
@@ -84,7 +84,7 @@ const deleteTask = async (id: number) => {
                 </div>
             </li>
         </ul>
-        <div v-if="store.isLoading" class="todo-list__empty">
+        <div v-if="store.isFetching" class="todo-list__empty">
             <Skeleton 
                 v-for="item in 9" 
                 :key="item"

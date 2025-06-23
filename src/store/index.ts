@@ -4,6 +4,7 @@ import type { todoTaskType } from '@/types/todoTypes';
 
 export const useTodoStore = defineStore('todo', () => {
     const isLoading = ref<boolean>(false);
+    const isFetching = ref<boolean>(false);
     const todoList = ref<todoTaskType[]>([]);
     const todoTask = ref<todoTaskType>({
         id: 0,
@@ -17,6 +18,10 @@ export const useTodoStore = defineStore('todo', () => {
     };
 
     const setIsLoading = (val: boolean): void => {
+        isLoading.value = val;
+    };
+
+    const setIsFetching = (val: boolean): void => {
         isLoading.value = val;
     };
 
@@ -44,6 +49,8 @@ export const useTodoStore = defineStore('todo', () => {
 
     return {
         isLoading,
+        isFetching,
+        setIsFetching,
         setIsLoading,
         todoTask,
         todoList,
