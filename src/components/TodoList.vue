@@ -15,7 +15,6 @@ onMounted(async () => {
         store.setIsFetching(true)
         const tasks = await useFetcher.get('/todos');
         store.setTodoTask(tasks.data);
-
     } catch (error) {
         console.error('Failed to delete task:', error);
         store.setIsFetching(false)
@@ -44,6 +43,12 @@ const deleteTask = async (id: number) => {
         <h2 class="todo-list__title">
             {{ taksQuantity > 0 ? `There are ${taksQuantity} tasks!` : 'Task list is empty!' }}
         </h2>
+        <div v-if="store.isFetching" class="todo-list__empty">
+            <Skeleton 
+                v-for="item in 9" 
+                :key="item"
+            ></Skeleton>
+        </div>
         <ul v-if="taksQuantity > 0" class="todo-list__array">
             <li 
                 v-for="task in taskList" :key="task.id"
@@ -84,12 +89,6 @@ const deleteTask = async (id: number) => {
                 </div>
             </li>
         </ul>
-        <div v-if="store.isFetching" class="todo-list__empty">
-            <Skeleton 
-                v-for="item in 9" 
-                :key="item"
-            ></Skeleton>
-        </div>
     </div>
 </template>
 

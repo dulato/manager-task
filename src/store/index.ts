@@ -22,7 +22,7 @@ export const useTodoStore = defineStore('todo', () => {
     };
 
     const setIsFetching = (val: boolean): void => {
-        isLoading.value = val;
+        isFetching.value = val;
     };
 
     const addTodoTask = (obj: todoTaskType): void => {
